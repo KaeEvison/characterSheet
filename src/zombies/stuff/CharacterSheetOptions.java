@@ -7,6 +7,8 @@ public class CharacterSheetOptions extends javax.swing.JFrame
     CharacterManager cManager;
     SkillManager sManager;
     TraitManager tManager;
+    EquipmentManager eManager;
+    Roller roller;
     
     public CharacterSheetOptions()
     {
@@ -18,7 +20,7 @@ public class CharacterSheetOptions extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        btnOpenRoller = new javax.swing.JButton();
         btnManageCharacters = new javax.swing.JButton();
         chkBasicInfo = new javax.swing.JCheckBox();
         btnEditBasic = new javax.swing.JToggleButton();
@@ -33,23 +35,21 @@ public class CharacterSheetOptions extends javax.swing.JFrame
         chkTraits = new javax.swing.JCheckBox();
         btnEditTraits = new javax.swing.JButton();
         chkNotes = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        chkEquipment = new javax.swing.JCheckBox();
+        btnEditEquipment = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setLocation(new java.awt.Point(920, 0));
-        getContentPane().setLayout(new java.awt.GridLayout(7, 2));
+        getContentPane().setLayout(new java.awt.GridLayout(8, 2));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 159, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 46, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel3);
+        btnOpenRoller.setText("Dice roller");
+        btnOpenRoller.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenRollerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnOpenRoller);
 
         btnManageCharacters.setText("Manage Characters");
         btnManageCharacters.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +165,36 @@ public class CharacterSheetOptions extends javax.swing.JFrame
         });
         getContentPane().add(chkNotes);
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 159, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 46, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel2);
+
+        chkEquipment.setSelected(true);
+        chkEquipment.setText("Equipment visible");
+        chkEquipment.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkEquipmentStateChanged(evt);
+            }
+        });
+        getContentPane().add(chkEquipment);
+
+        btnEditEquipment.setText("Manage equipment");
+        btnEditEquipment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditEquipmentActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEditEquipment);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -270,6 +300,23 @@ public class CharacterSheetOptions extends javax.swing.JFrame
         }
     }//GEN-LAST:event_chkNotesStateChanged
 
+    private void chkEquipmentStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkEquipmentStateChanged
+        if (chkEquipment.isSelected())
+            ZombiesStuff.cSheet.pnlEquipment.setVisible(true);
+        else
+            ZombiesStuff.cSheet.pnlEquipment.setVisible(false);
+    }//GEN-LAST:event_chkEquipmentStateChanged
+
+    private void btnEditEquipmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditEquipmentActionPerformed
+        eManager = new EquipmentManager();
+        eManager.setVisible(true);
+    }//GEN-LAST:event_btnEditEquipmentActionPerformed
+
+    private void btnOpenRollerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenRollerActionPerformed
+        roller = new Roller();
+        roller.setVisible(true);
+    }//GEN-LAST:event_btnOpenRollerActionPerformed
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -305,19 +352,22 @@ public class CharacterSheetOptions extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnEditBasic;
+    private javax.swing.JButton btnEditEquipment;
     private javax.swing.JToggleButton btnEditLevel;
     private javax.swing.JButton btnEditSkills;
     private javax.swing.JToggleButton btnEditStats;
     private javax.swing.JButton btnEditTraits;
     private javax.swing.JButton btnManageCharacters;
+    private javax.swing.JButton btnOpenRoller;
     private javax.swing.JButton btnPortStats;
     private javax.swing.JCheckBox chkBasicInfo;
+    private javax.swing.JCheckBox chkEquipment;
     private javax.swing.JCheckBox chkLevel;
     private javax.swing.JCheckBox chkNotes;
     private javax.swing.JCheckBox chkSkills;
     private javax.swing.JCheckBox chkStats;
     private javax.swing.JCheckBox chkTraits;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

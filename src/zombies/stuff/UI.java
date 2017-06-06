@@ -10,13 +10,13 @@ public class UI extends javax.swing.JFrame {
     Dice dice = new Dice();
     WormPowerGenerator power = new WormPowerGenerator();
     PowerManager pManager = new PowerManager();
-    CharacterSheet cSheet = new CharacterSheet();
     Serial serial = new Serial();
     
     public ArrayList<CharacterGroup> allGroups;
     ArrayList<String> currentPowerset;
     String powerString;
     int[] statHolder = new int[8];
+    boolean loadSuccessful = false;
     
     public UI()
     {
@@ -36,6 +36,7 @@ public class UI extends javax.swing.JFrame {
             System.out.println("ATTEMPTING TO LOAD");
             allGroups = (ArrayList<CharacterGroup>)serial.Deserialize("All-Groups.dat");
             System.out.println("LOADED");
+            loadSuccessful = true;
             
             //If read is successful, save backup file in case of corruption
             try
@@ -56,6 +57,7 @@ public class UI extends javax.swing.JFrame {
                 System.out.println("ATTEMPTING TO READ FROM BACKUP");
                 allGroups = (ArrayList<CharacterGroup>)serial.Deserialize("All-Groups-backup");
                 System.out.println("READING FROM BACKUP SUCCESSFUL");
+                loadSuccessful = true;
             } catch (IOException ex)
             {
                 //If reading from backup fails aswell generate default data
@@ -90,9 +92,7 @@ public class UI extends javax.swing.JFrame {
         {
             //Retrieve the user's values from the input areas and use them to roll dice
                 //then display the result to the user
-            lblRollResult.setText(dice.roll(Double.parseDouble(txtNumber.getText()),
-                                            Double.parseDouble(txtDie.getText()),
-                                            Double.parseDouble(txtBonus.getText()))+"");
+            lblRollResult.setText(dice.roll(Integer.parseInt(txtNumber.getText()), Integer.parseInt(txtDie.getText()), Integer.parseInt(txtBonus.getText()))+"");
         }
         catch (NumberFormatException e)
         {
@@ -120,14 +120,14 @@ public class UI extends javax.swing.JFrame {
     {
         try
         {
-            statHolder[0] = (int)Double.parseDouble(lblSTRValue.getText());
-            statHolder[1] = (int)Double.parseDouble(lblCONValue.getText());
-            statHolder[2] = (int)Double.parseDouble(lblDEXValue.getText());
-            statHolder[3] = (int)Double.parseDouble(lblAGIValue.getText());
-            statHolder[4] = (int)Double.parseDouble(lblINTValue.getText());
-            statHolder[5] = (int)Double.parseDouble(lblWISValue.getText());
-            statHolder[6] = (int)Double.parseDouble(lblCHAValue.getText());
-            statHolder[7] = (int)Double.parseDouble(lblPERValue.getText());
+            statHolder[0] = Integer.parseInt(lblSTRValue.getText());
+            statHolder[1] = Integer.parseInt(lblCONValue.getText());
+            statHolder[2] = Integer.parseInt(lblDEXValue.getText());
+            statHolder[3] = Integer.parseInt(lblAGIValue.getText());
+            statHolder[4] = Integer.parseInt(lblINTValue.getText());
+            statHolder[5] = Integer.parseInt(lblWISValue.getText());
+            statHolder[6] = Integer.parseInt(lblCHAValue.getText());
+            statHolder[7] = Integer.parseInt(lblPERValue.getText());
         } catch (NumberFormatException e)
         {
             statHolder[0] = 10;
@@ -395,7 +395,7 @@ public class UI extends javax.swing.JFrame {
             System.out.println("WRITING TO FILE");
             serial.Serialize(allGroups, "All-Groups.dat");
             System.out.println("WRITE SUCCESSFUL");
-        } catch (IOException e){System.out.println("WRITE FAILED");}
+        } catch (IOException e){System.out.println("WRITE FAILED");System.out.println(e);}
     }//GEN-LAST:event_formWindowClosing
 
     private void btnRollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollActionPerformed

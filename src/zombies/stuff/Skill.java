@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Skill implements Serializable
 {
+    private static final long serialVersionUID = 3L;
+    
     private String name;
     private String stat;
     private int ranks;
@@ -11,12 +13,28 @@ public class Skill implements Serializable
     
     public Skill(){}
     
+    public Skill(String pName)
+    {
+        name = pName;
+        stat = "";
+        ranks = 0;
+        otherBonus = 0;
+    }
+    
     public Skill(String pName, String pStat)
     {
         name = pName;
         stat = pStat;
         ranks = 0;
         otherBonus = 0;
+    }
+    
+    public Skill(Skill toCopy)
+    {
+        name = toCopy.getName();
+        stat = toCopy.getStat();
+        ranks = toCopy.getRanks();
+        otherBonus = toCopy.getOtherBonus();
     }
     
     public String getName(){return name;}

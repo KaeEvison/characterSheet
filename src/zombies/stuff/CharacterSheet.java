@@ -19,6 +19,7 @@ public class CharacterSheet extends javax.swing.JFrame
     ArrayList<String> skillNames = new ArrayList();
     ArrayList<String> traitNames = new ArrayList();
     ArrayList<String> noteNames = new ArrayList();
+    ArrayList<String> equipmentNames = new ArrayList();
     String sHolder;
     
     public CharacterSheet()
@@ -49,6 +50,8 @@ public class CharacterSheet extends javax.swing.JFrame
         lblWIS.setText(currentCharacter.getWIS()+"");
         lblCHA.setText(currentCharacter.getCHA()+"");
         lblPER.setText(currentCharacter.getPER()+"");
+        //Calculate modifiers
+        currentCharacter.updateValues();
         //Check whether stas are positive, if so add a "+" before the value
         if (currentCharacter.getSTRMod() >= 0)
             lblSTRMod.setText("+" + currentCharacter.getSTRMod());
@@ -106,6 +109,18 @@ public class CharacterSheet extends javax.swing.JFrame
             noteNames.add(currentCharacter.getNotes().get(i).getName());
         }
         cmbNotes.setModel(new DefaultComboBoxModel<String>(noteNames.toArray(new String[0])));
+        txtNoteContent.setText("");
+        txtNoteName.setText("");
+        txtNoteContent.setEditable(false);
+        txtNoteName.setEditable(false);
+        
+        //Retrieve and display names of equipment
+        equipmentNames.clear();
+        for(int i = 0; i < currentCharacter.getEquipment().size(); i++)
+        {
+            equipmentNames.add(currentCharacter.getEquipment().get(i).getName());
+        }
+        lstEquipment.setListData((String[]) equipmentNames.toArray(new String[0]));
     }
     
     //Method to receieve a set of stats and record them for the current character
@@ -234,6 +249,12 @@ public class CharacterSheet extends javax.swing.JFrame
             txtNoteName.setEditable(false);
         }
     }
+    
+    //Method to update the UI with details of a specific piece of equipment when selected from the list
+    private void equipmentDetails()
+    {
+        txtEquipmentAttributes.setText(currentCharacter.getEquipment().get(lstEquipment.getSelectedIndex()).toString());
+    }
 
     
     @SuppressWarnings("unchecked")
@@ -309,6 +330,11 @@ public class CharacterSheet extends javax.swing.JFrame
         pnlNoteContent = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtNoteContent = new javax.swing.JTextArea();
+        pnlEquipment = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        lstEquipment = new javax.swing.JList<>();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        txtEquipmentAttributes = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(475, 0));
@@ -420,9 +446,11 @@ public class CharacterSheet extends javax.swing.JFrame
         pnlStats.setPreferredSize(new java.awt.Dimension(400, 75));
         pnlStats.setLayout(new java.awt.GridLayout(4, 6));
 
+        lblSTRTag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSTRTag.setText("STR:");
         pnlStats.add(lblSTRTag);
 
+        lblSTR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSTR.setText("10");
         lblSTR.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -431,12 +459,15 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblSTR);
 
+        lblSTRMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSTRMod.setText("+0");
         pnlStats.add(lblSTRMod);
 
+        lblIINTTag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIINTTag.setText("INT:");
         pnlStats.add(lblIINTTag);
 
+        lblINT.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblINT.setText("10");
         lblINT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -445,12 +476,15 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblINT);
 
+        lblINTMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblINTMod.setText("+0");
         pnlStats.add(lblINTMod);
 
+        lblCONTag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCONTag.setText("CON:");
         pnlStats.add(lblCONTag);
 
+        lblCON.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCON.setText("10");
         lblCON.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -459,12 +493,15 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblCON);
 
+        lblCONMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCONMod.setText("+0");
         pnlStats.add(lblCONMod);
 
+        lblWISTag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblWISTag.setText("WIS:");
         pnlStats.add(lblWISTag);
 
+        lblWIS.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblWIS.setText("10");
         lblWIS.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -473,12 +510,15 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblWIS);
 
+        lblWISMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblWISMod.setText("+0");
         pnlStats.add(lblWISMod);
 
+        lblDEXTag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDEXTag.setText("DEX:");
         pnlStats.add(lblDEXTag);
 
+        lblDEX.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDEX.setText("10");
         lblDEX.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -487,12 +527,15 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblDEX);
 
+        lblDEXMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDEXMod.setText("+0");
         pnlStats.add(lblDEXMod);
 
+        lblCHATag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCHATag.setText("CHA:");
         pnlStats.add(lblCHATag);
 
+        lblCHA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCHA.setText("10");
         lblCHA.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -501,12 +544,15 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblCHA);
 
+        lblCHAMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblCHAMod.setText("+0");
         pnlStats.add(lblCHAMod);
 
+        lblAGITag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAGITag.setText("AGI:");
         pnlStats.add(lblAGITag);
 
+        lblAGI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAGI.setText("10");
         lblAGI.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -515,12 +561,15 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblAGI);
 
+        lblAGIMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAGIMod.setText("+0");
         pnlStats.add(lblAGIMod);
 
+        lblPERTag.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPERTag.setText("PER:");
         pnlStats.add(lblPERTag);
 
+        lblPER.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPER.setText("10");
         lblPER.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -529,6 +578,7 @@ public class CharacterSheet extends javax.swing.JFrame
         });
         pnlStats.add(lblPER);
 
+        lblPERMod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPERMod.setText("+0");
         pnlStats.add(lblPERMod);
 
@@ -643,8 +693,11 @@ public class CharacterSheet extends javax.swing.JFrame
         pnlNoteOptions.setMaximumSize(new java.awt.Dimension(400, 25));
         pnlNoteOptions.setMinimumSize(new java.awt.Dimension(400, 25));
         pnlNoteOptions.setPreferredSize(new java.awt.Dimension(400, 25));
-        pnlNoteOptions.setLayout(new java.awt.GridLayout(1, 4));
+        pnlNoteOptions.setLayout(new javax.swing.BoxLayout(pnlNoteOptions, javax.swing.BoxLayout.LINE_AXIS));
 
+        cmbNotes.setMaximumSize(new java.awt.Dimension(125, 23));
+        cmbNotes.setMinimumSize(new java.awt.Dimension(125, 23));
+        cmbNotes.setPreferredSize(new java.awt.Dimension(125, 23));
         cmbNotes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbNotesActionPerformed(evt);
@@ -653,6 +706,10 @@ public class CharacterSheet extends javax.swing.JFrame
         pnlNoteOptions.add(cmbNotes);
 
         btnAddNote.setText("New note");
+        btnAddNote.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnAddNote.setMaximumSize(new java.awt.Dimension(74, 23));
+        btnAddNote.setMinimumSize(new java.awt.Dimension(74, 23));
+        btnAddNote.setPreferredSize(new java.awt.Dimension(74, 23));
         btnAddNote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddNoteActionPerformed(evt);
@@ -661,6 +718,10 @@ public class CharacterSheet extends javax.swing.JFrame
         pnlNoteOptions.add(btnAddNote);
 
         btnDeleteNote.setText("Delete");
+        btnDeleteNote.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnDeleteNote.setMaximumSize(new java.awt.Dimension(74, 23));
+        btnDeleteNote.setMinimumSize(new java.awt.Dimension(74, 23));
+        btnDeleteNote.setPreferredSize(new java.awt.Dimension(74, 23));
         btnDeleteNote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteNoteActionPerformed(evt);
@@ -669,6 +730,9 @@ public class CharacterSheet extends javax.swing.JFrame
         pnlNoteOptions.add(btnDeleteNote);
 
         txtNoteName.setEditable(false);
+        txtNoteName.setMaximumSize(new java.awt.Dimension(125, 23));
+        txtNoteName.setMinimumSize(new java.awt.Dimension(125, 23));
+        txtNoteName.setPreferredSize(new java.awt.Dimension(125, 23));
         txtNoteName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNoteNameKeyReleased(evt);
@@ -700,6 +764,40 @@ public class CharacterSheet extends javax.swing.JFrame
 
         jPanel1.add(pnlNoteContent);
 
+        pnlEquipment.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        pnlEquipment.setMaximumSize(new java.awt.Dimension(400, 75));
+        pnlEquipment.setMinimumSize(new java.awt.Dimension(400, 75));
+        pnlEquipment.setPreferredSize(new java.awt.Dimension(400, 75));
+        pnlEquipment.setLayout(new java.awt.GridLayout(1, 0));
+
+        lstEquipment.setToolTipText("");
+        lstEquipment.setMaximumSize(new java.awt.Dimension(198, 73));
+        lstEquipment.setMinimumSize(new java.awt.Dimension(198, 73));
+        lstEquipment.setPreferredSize(new java.awt.Dimension(198, 73));
+        lstEquipment.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstEquipmentValueChanged(evt);
+            }
+        });
+        jScrollPane6.setViewportView(lstEquipment);
+
+        pnlEquipment.add(jScrollPane6);
+
+        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        txtEquipmentAttributes.setEditable(false);
+        txtEquipmentAttributes.setColumns(20);
+        txtEquipmentAttributes.setLineWrap(true);
+        txtEquipmentAttributes.setRows(5);
+        txtEquipmentAttributes.setWrapStyleWord(true);
+        txtEquipmentAttributes.setMaximumSize(new java.awt.Dimension(198, 73));
+        txtEquipmentAttributes.setMinimumSize(new java.awt.Dimension(198, 73));
+        jScrollPane7.setViewportView(txtEquipmentAttributes);
+
+        pnlEquipment.add(jScrollPane7);
+
+        jPanel1.add(pnlEquipment);
+
         jScrollPane2.setViewportView(jPanel1);
 
         getContentPane().add(jScrollPane2);
@@ -717,7 +815,9 @@ public class CharacterSheet extends javax.swing.JFrame
         if (basicEditable)
         {
             //request new input and update character
-            currentCharacter.setName(JOptionPane.showInputDialog("Enter new name:"));
+            sHolder = JOptionPane.showInputDialog("Enter new name:");
+            if (sHolder != null)
+                currentCharacter.setName(sHolder);
             updateAll();
         }
     }//GEN-LAST:event_lblNameMouseClicked
@@ -726,8 +826,9 @@ public class CharacterSheet extends javax.swing.JFrame
         //Check editing is currently allowed
         if (basicEditable)
         {
-            //request new input and update character
-            currentCharacter.setPlayerClass(JOptionPane.showInputDialog("Enter new class:"));
+            sHolder = JOptionPane.showInputDialog("Enter new class:");
+            if (sHolder != null)
+                currentCharacter.setPlayerClass(sHolder);
             updateAll();
         }
     }//GEN-LAST:event_lblClassMouseClicked
@@ -736,8 +837,10 @@ public class CharacterSheet extends javax.swing.JFrame
         //Check editing is currently allowed
         if (basicEditable)
         {
-            //request new input and update character
-            currentCharacter.setRace(JOptionPane.showInputDialog("Enter new race:"));
+            
+            sHolder = JOptionPane.showInputDialog("Enter new race:");
+            if (sHolder != null)
+                currentCharacter.setRace(sHolder);
             updateAll();
         }
     }//GEN-LAST:event_lblRaceMouseClicked
@@ -746,8 +849,10 @@ public class CharacterSheet extends javax.swing.JFrame
         //Check editing is currently allowed
         if (basicEditable)
         {
-            //request new input and update character
-            currentCharacter.setGender(JOptionPane.showInputDialog("Enter new gender:"));
+            
+            sHolder = JOptionPane.showInputDialog("Enter new gender:");
+            if (sHolder != null)
+                currentCharacter.setGender(sHolder);
             updateAll();
         }
     }//GEN-LAST:event_lblGenderMouseClicked
@@ -1057,7 +1162,8 @@ public class CharacterSheet extends javax.swing.JFrame
 
     private void txtNoteContentKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNoteContentKeyReleased
         //Update note content whenever the user makes modifications
-        currentCharacter.getNotes().get(cmbNotes.getSelectedIndex()).setContent(txtNoteContent.getText());
+        if (cmbNotes.getSelectedIndex() >= 0)
+            currentCharacter.getNotes().get(cmbNotes.getSelectedIndex()).setContent(txtNoteContent.getText());
     }//GEN-LAST:event_txtNoteContentKeyReleased
 
     private void txtNoteNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNoteNameKeyReleased
@@ -1068,6 +1174,14 @@ public class CharacterSheet extends javax.swing.JFrame
         updateAll();
         cmbNotes.setSelectedIndex(holder);
     }//GEN-LAST:event_txtNoteNameKeyReleased
+
+    private void lstEquipmentValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstEquipmentValueChanged
+        //Update when a piece of equipment is selected
+        if (lstEquipment.getSelectedIndex() >= 0)
+            equipmentDetails();
+        else
+            txtEquipmentAttributes.setText("");
+    }//GEN-LAST:event_lstEquipmentValueChanged
 
     
     public static void main(String args[]) {
@@ -1113,6 +1227,8 @@ public class CharacterSheet extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lblAGI;
     private javax.swing.JLabel lblAGIMod;
     private javax.swing.JLabel lblAGITag;
@@ -1157,9 +1273,11 @@ public class CharacterSheet extends javax.swing.JFrame
     private javax.swing.JLabel lblWIS;
     private javax.swing.JLabel lblWISMod;
     private javax.swing.JLabel lblWISTag;
+    private javax.swing.JList<String> lstEquipment;
     private javax.swing.JList<String> lstSkills;
     private javax.swing.JList<String> lstTraits;
     public javax.swing.JPanel pnlBasicInfo;
+    public javax.swing.JPanel pnlEquipment;
     public javax.swing.JPanel pnlLevel;
     public javax.swing.JPanel pnlNoteContent;
     public javax.swing.JPanel pnlNoteOptions;
@@ -1170,6 +1288,7 @@ public class CharacterSheet extends javax.swing.JFrame
     private javax.swing.JPanel pnlTraitDescription;
     private javax.swing.JPanel pnlTraitList;
     public javax.swing.JPanel pnlTraits;
+    private javax.swing.JTextArea txtEquipmentAttributes;
     private javax.swing.JTextArea txtNoteContent;
     private javax.swing.JTextField txtNoteName;
     private javax.swing.JTextArea txtTraitDescription;

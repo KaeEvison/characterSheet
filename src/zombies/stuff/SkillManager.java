@@ -8,6 +8,7 @@ public class SkillManager extends javax.swing.JFrame
     CharacterSheet cSheet;
     ArrayList<Skill> skillList;
     ArrayList<String> names = new ArrayList();
+    String sHolder;
     
     public SkillManager()
     {
@@ -61,7 +62,7 @@ public class SkillManager extends javax.swing.JFrame
         cmbStat = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocation(new java.awt.Point(250, 400));
+        setLocation(new java.awt.Point(250, 100));
 
         lstManageSkills.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -215,10 +216,11 @@ public class SkillManager extends javax.swing.JFrame
 
     private void btnSkillAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkillAddActionPerformed
         //Asks for skill name and dependant stat then creates a new skill with that data
-        skillList.add(new Skill(JOptionPane.showInputDialog("Enter skill name"),
-                                JOptionPane.showInputDialog("Enter dependant stat")));
-        updateAll();
-        cSheet.updateAll();
+        sHolder = JOptionPane.showInputDialog("Enter skill name");
+        if (sHolder != null)
+            skillList.add(new Skill(sHolder));
+            updateAll();
+            cSheet.updateAll();
     }//GEN-LAST:event_btnSkillAddActionPerformed
 
     private void btnSkillRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSkillRemoveActionPerformed

@@ -56,6 +56,7 @@ public class TraitManager extends javax.swing.JFrame
         btnUpdateTrait = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocation(new java.awt.Point(250, 100));
 
         lstManageTraits.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
